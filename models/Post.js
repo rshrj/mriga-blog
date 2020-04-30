@@ -5,6 +5,10 @@ const PostSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  image: {
+    type: String,
+    default: 'https://picsum.photos/600/300'
+  },
   tags: {
     type: [String],
     required: true,

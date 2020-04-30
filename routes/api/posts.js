@@ -29,6 +29,7 @@ router.get('/', async (req, res) => {
       id: post.id,
       title: post.title,
       tags: post.tags,
+      image: post.image,
       body: post.body,
       created_at: post.created_at
     }));
