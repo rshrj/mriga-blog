@@ -1,4 +1,5 @@
 const express = require('express');
+const axios = require('axios');
 const { validationResult } = require('express-validator');
 
 const Post = require('../../models/Post');
@@ -54,9 +55,15 @@ router.post('/', validatePost, async (req, res) => {
   try {
     let tagsParsed = parseTags(tags);
 
+    let randomPic = await axios.get('https://picsum.photos/600/300', {
+      maxRedirects: 0,
+      validateStatus: null
+    });
+
     let post = new Post({
       title,
       tags: tagsParsed,
+      image: randomPic.headers.location,
       body
     });
 
