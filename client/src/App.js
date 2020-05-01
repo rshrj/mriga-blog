@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 import './App.css';
 
@@ -8,11 +8,13 @@ import Blog from './components/Blog';
 import NotFound from './components/NotFound';
 import Layout from './components/Layout';
 import PostDetail from './components/PostDetail';
-import TeamPage from './components/TeamPage';
-import AboutPage from './components/AboutPage';
 
 function App() {
   const [showScroll, setShowScroll] = useState(false);
+
+  // const history = useHistory();
+
+  const { posts } = useSelector((store) => store.post);
 
   const handleScroll = (e) => {
     if (!showScroll && window.pageYOffset > 400) {
@@ -28,34 +30,22 @@ function App() {
 
   window.addEventListener('scroll', handleScroll);
 
-  const [posts, setPosts] = useState([]);
-
-  const fetchPosts = () => {
-    axios
-      .get('/api/posts')
-      .then((res) => setPosts(res.data.posts))
-      .catch((err) => console.log(err));
-  };
-
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  // useEffect(() => {
+  //   history.listen((location, action) => {
+  //     console.log(
+  //       `The current URL is ${location.pathname}${location.search}${location.hash}`
+  //     );
+  //     console.log(`The last navigation action was ${action}`);
+  //   });
+  // });
 
   return (
     <Router>
-      <Layout
-        scrollToTop={scrollToTop}
-        showScroll={showScroll}
-        fetchPosts={fetchPosts}
-      >
+      <Layout scrollToTop={scrollToTop} showScroll={showScroll}>
         <Switch>
-          <Route
-            exact
-            path='/'
-            render={(props) => <Blog posts={posts} {...props} />}
-          />
-          <Route exact path='/team' component={TeamPage} />
-          <Route exact path='/about' component={AboutPage} />
+          <Route exact path='/'>
+            <Blog posts={posts} />
+          </Route>
           <Route exact path='/post/:id' component={PostDetail} />
           <Route component={NotFound} />
         </Switch>

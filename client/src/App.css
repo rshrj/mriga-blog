@@ -330,7 +330,7 @@ section.posts {
 .details p {
   margin-right: 2rem;
   font-size: 0.8rem;
-  color: #666;
+  color: #999;
 }
 
 .tags ul {
@@ -342,7 +342,7 @@ section.posts {
 
 .tags ul li {
   background: var(--three);
-  margin-right: 0.5rem;
+  margin-right: 0.2rem;
   overflow: hidden;
   border-radius: 2rem;
   padding: 0.2rem 1rem;
@@ -366,18 +366,20 @@ section.posts {
   padding: 1rem;
   padding-right: 3rem;
   text-align: justify;
+  word-wrap: break-word;
   color: #444;
 }
 
 footer {
   width: 100%;
   margin-top: 5rem;
-  color: white;
+  color: #ddd;
+  font-size: 0.9rem;
   display: flex;
   justify-content: center;
   align-items: center;
   box-shadow: 0 0 20px -8px black;
-  padding: 2rem 2rem;
+  padding: 1rem 1rem;
   background: var(--three);
 }
 
@@ -442,6 +444,136 @@ footer {
   text-align: center;
 }
 
+.spinner {
+  background-color: white;
+  color: transparent;
+  height: 100%;
+  background: url('./img/tail-spin.svg') no-repeat center center/contain;
+  text-align: center;
+}
+
+.loading-posts {
+  width: 100%;
+  height: 20rem;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  z-index: 20;
+  align-items: center;
+  text-align: center;
+  background: #eee;
+  border-radius: 0.2rem;
+  box-shadow: 0 0 20px -4px black;
+}
+
+.loading-posts-spinner {
+  width: 10rem;
+  z-index: 20;
+  height: 5rem;
+  background: url('./img/three-dots.svg') no-repeat center center/contain;
+}
+
+section.notfound {
+  padding: 8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  font-size: 4rem;
+  font-weight: 900;
+  z-index: 20;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+}
+
+section.postdetail {
+  min-height: calc(100vh - 5rem - 30rem - 6rem);
+}
+
+.postdetail-card {
+  background: #eee;
+  margin: 1rem 0;
+  border-radius: 0.3rem;
+  box-shadow: 0 0 20px -8px black;
+  display: flex;
+  flex-flow: column;
+  z-index: 20;
+}
+
+.postdetail-card > .post-title {
+  padding: 2rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px #999 solid;
+  margin-bottom: 1rem;
+}
+
+.post-title > h1 {
+  font-size: 3rem;
+  font-weight: 100;
+  color: var(--two);
+}
+
+.post-title > p {
+  color: #999;
+}
+
+.post-tags {
+  padding: 1rem 4rem;
+}
+
+.post-tags ul {
+  list-style: none;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.post-tags ul li {
+  background: var(--three);
+  margin-right: 0.2rem;
+  overflow: hidden;
+  border-radius: 2rem;
+  padding: 0.4rem 1.4rem;
+  transition: 0.2s ease;
+}
+
+.post-tags ul li:hover {
+  background: rgba(57, 64, 50, 0.8);
+  box-shadow: 0 0 10 -4px black;
+  cursor: pointer;
+}
+
+.post-tags a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.post-image {
+  color: transparent;
+  height: 15rem;
+  width: 40%;
+  margin-right: 2rem;
+  margin-bottom: 0rem;
+  float: left;
+  background: url('https://picsum.photos/600/300') no-repeat center center/cover;
+}
+
+.post-content {
+  padding: 1rem 4rem;
+  padding-bottom: 8rem;
+  float: right;
+  text-align: justify;
+  font-size: 1.3rem;
+  line-height: 2.5rem;
+  word-wrap: break-word;
+  color: #444;
+}
+
 /* .spinner {
   animation: rotate 2s linear infinite;
   width: 50px;
@@ -476,16 +608,3 @@ footer {
     stroke-dashoffset: -124;
   }
 } */
-
-section.notfound {
-  padding: 8rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  color: white;
-  font-size: 4rem;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.2rem;
-}

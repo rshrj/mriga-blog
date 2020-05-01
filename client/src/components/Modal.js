@@ -1,51 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faPaperPlane,
+  faTimes,
+  faCheckCircle
+} from '@fortawesome/free-solid-svg-icons';
 
-const Modal = ({ modalShown, closeModal, fetchPosts }) => {
+import { submitPost, closeModal } from '../redux/actions/post';
+import { flushErrors } from '../redux/actions/error';
+
+const Modal = () => {
   const [title, setTitle] = useState('');
   const [tags, setTags] = useState('');
   const [body, setBody] = useState('');
-  const [disabled, setDisabled] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+
+  const {
+    modalShown,
+    submittingPost,
+    submitSuccessful,
+    modalFlush
+  } = useSelector((store) => store.post);
+  const errors = useSelector((store) => store.error).input;
+  const dispatch = useDispatch();
 
   const history = useHistory();
 
-  const [errors, setErrors] = useState({});
-
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    setDisabled(true);
-
-    let reqBody = JSON.stringify({ title, tags, body });
-    let options = { headers: { 'Content-Type': 'application/json' } };
-    axios
-      .post('/api/posts', reqBody, options)
-      .then((res) => {
-        setSubmitted(true);
-        setTimeout(() => {
-          closeModal(e);
-          setSubmitted(false);
-          history.push('/');
-          fetchPosts();
-        }, 1000);
-      })
-      .catch((err) => {
-        let errorObj = {};
-        const errorsArray = err.response.data.errors;
-        errorsArray.forEach((error) => {
-          errorObj[error.param] = error.msg;
-        });
-        setErrors(errorObj);
-        setDisabled(false);
-      });
+    dispatch(submitPost({ title, tags, body }, history));
   };
 
   const handleChange = (e, setter) => {
-    setErrors({});
+    dispatch(flushErrors(false));
     setter(e.target.value);
   };
+
+  const closeModalBtn = (e) => {
+    e.preventDefault();
+    dispatch(closeModal());
+  };
+
+  useEffect(() => {
+    if (modalFlush) {
+      setTitle('');
+      setTags('');
+      setBody('');
+    }
+  }, [setTitle, setTags, setBody, modalFlush]);
 
   return (
     <div className={`master-overlay ${modalShown && 'shown'}`}>
@@ -98,31 +101,40 @@ const Modal = ({ modalShown, closeModal, fetchPosts }) => {
               <small className='invalid-text'>{errors.body}</small>
             )}
           </div>
-          {submitted && (
+          {submitSuccessful && (
             <div className='input-group'>
-              <small class='submitted-text'>
-                <i class='fas fa-check-circle'></i> Submitted Successfully
+              <small className='submitted-text'>
+                <FontAwesomeIcon icon={faCheckCircle} fixedWidth /> Submitted
+                Successfully
               </small>
             </div>
           )}
           <div className='input-group'>
             <button
               type='submit'
-              className={`btn btn-submit ${disabled && 'btn-submit-disabled'}`}
-              disabled={disabled}
+              className={`btn btn-submit ${
+                submittingPost && 'btn-submit-disabled'
+              }`}
+              disabled={submittingPost}
             >
-              <i className='fas fa-paper-plane fa-fw'></i> Submit
+              {submittingPost ? (
+                <span className='spinner'>Loading...</span>
+              ) : (
+                <React.Fragment>
+                  <FontAwesomeIcon icon={faPaperPlane} fixedWidth /> Submit
+                </React.Fragment>
+              )}
             </button>
           </div>
           <div className='input-group'>
             <button
-              className={`btn btn-close ${disabled && 'btn-close-disabled'}`}
-              onClick={(e) => {
-                setErrors({});
-                closeModal(e);
-              }}
+              className={`btn btn-close ${
+                submittingPost && 'btn-close-disabled'
+              }`}
+              disabled={submittingPost}
+              onClick={closeModalBtn}
             >
-              <i className='fas fa-times fa-fw'></i> Close
+              <FontAwesomeIcon icon={faTimes} fixedWidth /> Close
             </button>
           </div>
         </form>

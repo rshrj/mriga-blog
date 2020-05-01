@@ -17,7 +17,7 @@ const PostCard = ({ post }) => {
 
   useEffect(() => {
     postImg.current.style.backgroundImage = `url(${post.image})`;
-  }, []);
+  }, [post.image]);
 
   return (
     <div className='post-card'>
@@ -40,9 +40,7 @@ const PostCard = ({ post }) => {
               ))}
             </ul>
           </div>
-          <p>
-            <i>{post.created_at}</i>
-          </p>
+          <p>{post.created_at}</p>
         </div>
         <div className='content'>{shorten(post.body)}</div>
       </div>

@@ -10,5 +10,7 @@ module.exports.validatePost = [
   body('body', 'Please enter a post body').not().isEmpty(),
   body('tags', 'Tags must be alphanumeric')
     .if(body('tags').not().isEmpty())
-    .custom((value) => value.split(',').some((str) => str.isAlphaNumeric()))
+    .custom((value) => {
+      return !value.split(',').some((str) => !str.trim().isAlphaNumeric());
+    })
 ];

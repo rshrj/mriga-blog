@@ -1,44 +1,42 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
+
+import { openModal } from '../redux/actions/post';
 
 import Footer from './Footer';
 import Modal from './Modal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faArrowUp,
+  faChevronCircleRight
+} from '@fortawesome/free-solid-svg-icons';
+import { faBuffer } from '@fortawesome/free-brands-svg-icons';
 
 const Layout = (props) => {
-  const [modalShown, setModalShown] = useState(false);
+  const dispatch = useDispatch();
 
   const navOverlay = useRef(null);
-
-  const history = useHistory();
-
-  const openModal = (e) => {
-    e.preventDefault();
-
-    setModalShown(true);
-  };
-
-  const closeModal = (e) => {
-    e.preventDefault();
-    setModalShown(false);
-  };
-
   useEffect(() => {
     navOverlay.current.style.opacity = props.showScroll ? 1 : 0;
   });
 
+  const history = useHistory();
+
+  const openModalBtn = (e) => {
+    e.preventDefault();
+    dispatch(openModal());
+  };
+
   return (
     <React.Fragment>
-      <Modal
-        modalShown={modalShown}
-        closeModal={closeModal}
-        fetchPosts={props.fetchPosts}
-      />
+      <Modal />
 
       <nav className={props.showScroll && 'shadow'}>
         <div className='nav-overlay' ref={navOverlay}></div>
         <div className='container'>
           <div className='brand' onClick={(e) => history.push('/')}>
-            <i className='fab fa-buffer fa-2x fa-fw'></i>
+            <FontAwesomeIcon icon={faBuffer} fixedWidth size='2x' />
             <h1>The Blog</h1>
           </div>
           <div className='nav-links'>
@@ -47,15 +45,9 @@ const Layout = (props) => {
                 <Link to='/'>Home</Link>
               </li>
               <li>
-                <Link to='/' onClick={openModal}>
+                <Link to='/' onClick={openModalBtn}>
                   Create post
                 </Link>
-              </li>
-              <li>
-                <Link to='/team'>Team</Link>
-              </li>
-              <li>
-                <Link to='/about'>About</Link>
               </li>
             </ul>
           </div>
@@ -66,15 +58,19 @@ const Layout = (props) => {
         className={`btn btn-scroll ${props.showScroll && 'show'}`}
         onClick={props.scrollToTop}
       >
-        <i className='fas fa-arrow-up'></i>
+        <FontAwesomeIcon icon={faArrowUp} />
       </button>
 
       <section className='banner'>
         <h1>Share your thoughts and memories.</h1>
-        <button className='btn btn-banner' id='btn-create' onClick={openModal}>
-          Create a blog post now
+        <button
+          className='btn btn-banner'
+          id='btn-create'
+          onClick={openModalBtn}
+        >
+          Create a blog post now{' '}
           <span>
-            <i className='fas fa-chevron-circle-right fa-fw'></i>
+            <FontAwesomeIcon icon={faChevronCircleRight} fixedWidth />
           </span>
         </button>
       </section>

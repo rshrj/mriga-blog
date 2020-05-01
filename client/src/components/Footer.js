@@ -1,9 +1,7 @@
 import React from 'react';
 
 const Footer = () => {
-  return (
-    <footer>Copyright © {new Date().getFullYear()} IGNOU Something</footer>
-  );
+  return <footer>Copyright © {new Date().getFullYear()} Mriga@IGNOU</footer>;
 };
 
 export default Footer;
