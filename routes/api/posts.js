@@ -1,7 +1,7 @@
 const express = require('express');
 const axios = require('axios');
 const { validationResult } = require('express-validator');
-const moment = require('moment');
+const moment = require('moment-timezone');
 
 const Post = require('../../models/Post');
 const { validatePost } = require('../../util/validation');
@@ -33,7 +33,7 @@ router.get('/', async (req, res) => {
       tags: post.tags,
       image: post.image,
       body: post.body,
-      created_at: moment(post.created_at).calendar()
+      created_at: moment(post.created_at).tz('Asia/Kolkata').calendar()
     }));
     return res.json({ success: true, posts });
   } catch (error) {
@@ -57,7 +57,7 @@ router.get('/:id', async (req, res) => {
       tags: post.tags,
       image: post.image,
       body: post.body,
-      created_at: moment(post.created_at).calendar()
+      created_at: moment(post.created_at).tz('Asia/Kolkata').calendar()
     };
     return res.json({ success: true, post: prepPost });
   } catch (error) {
