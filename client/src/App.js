@@ -1,25 +1,60 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import axios from 'axios';
+
 import './App.css';
 
+import Blog from './components/Blog';
+import NotFound from './components/NotFound';
+import Layout from './components/Layout';
+
 function App() {
+  const [showScroll, setShowScroll] = useState(false);
+
+  const handleScroll = (e) => {
+    if (!showScroll && window.pageYOffset > 400) {
+      setShowScroll(true);
+    } else if (showScroll && window.pageYOffset <= 400) {
+      setShowScroll(false);
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  window.addEventListener('scroll', handleScroll);
+
+  const [posts, setPosts] = useState([]);
+
+  const fetchPosts = () => {
+    axios
+      .get('/api/posts')
+      .then((res) => setPosts(res.data.posts))
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Layout
+        scrollToTop={scrollToTop}
+        showScroll={showScroll}
+        fetchPosts={fetchPosts}
+      >
+        <Switch>
+          <Route
+            exact
+            path='/'
+            render={(props) => <Blog posts={posts} {...props} />}
+          />
+          <Route component={NotFound} />
+        </Switch>
+      </Layout>
+    </Router>
   );
 }
 
