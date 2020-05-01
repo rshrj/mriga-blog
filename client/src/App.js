@@ -7,6 +7,9 @@ import './App.css';
 import Blog from './components/Blog';
 import NotFound from './components/NotFound';
 import Layout from './components/Layout';
+import PostDetail from './components/PostDetail';
+import TeamPage from './components/TeamPage';
+import AboutPage from './components/AboutPage';
 
 function App() {
   const [showScroll, setShowScroll] = useState(false);
@@ -51,6 +54,9 @@ function App() {
             path='/'
             render={(props) => <Blog posts={posts} {...props} />}
           />
+          <Route exact path='/team' component={TeamPage} />
+          <Route exact path='/about' component={AboutPage} />
+          <Route exact path='/post/:id' component={PostDetail} />
           <Route component={NotFound} />
         </Switch>
       </Layout>

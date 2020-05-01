@@ -192,8 +192,8 @@ nav > .container {
 }
 
 .input-textarea {
-  min-width: 20rem;
-  min-height: 20rem;
+  min-width: 10rem;
+  min-height: 10rem;
 }
 
 .input-text:hover,
@@ -476,3 +476,16 @@ footer {
     stroke-dashoffset: -124;
   }
 } */
+
+section.notfound {
+  padding: 8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  font-size: 4rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+}
