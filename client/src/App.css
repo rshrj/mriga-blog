@@ -295,7 +295,8 @@ section.posts {
 
 .post-img {
   display: inline-block;
-  background: url('https://picsum.photos/600/300') no-repeat center center/cover;
+  background: url('https://via.placeholder.com/600x300') no-repeat center
+    center/cover;
   width: 100% !important;
   height: 100% !important;
   overflow: hidden;
@@ -560,7 +561,8 @@ section.postdetail {
   margin-right: 2rem;
   margin-bottom: 0rem;
   float: left;
-  background: url('https://picsum.photos/600/300') no-repeat center center/cover;
+  background: url('https://via.placeholder.com/600x300') no-repeat center
+    center/cover;
 }
 
 .post-content {
