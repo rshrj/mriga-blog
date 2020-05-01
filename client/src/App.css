@@ -468,6 +468,7 @@ footer {
 }
 
 .loading-posts-spinner {
+  color: transparent;
   width: 10rem;
   z-index: 20;
   height: 5rem;
