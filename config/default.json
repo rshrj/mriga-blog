@@ -1,0 +1,3 @@
+{
+  "mongoURI": "mongodb+srv://blusavtech:blusavtech123@cluster0-vmaw1.mongodb.net/mrigaBlog?retryWrites=true&w=majority"
+}
