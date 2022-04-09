@@ -18,7 +18,7 @@
     "config": "^3.3.1",
     "express": "^4.17.1",
     "express-validator": "^6.4.0",
-    "moment": "^2.25.1",
+    "moment": "^2.29.2",
     "moment-timezone": "^0.5.28",
     "mongoose": "^5.9.11"
   },
