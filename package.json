@@ -19,7 +19,7 @@
     "express": "^4.17.1",
     "express-validator": "^6.4.0",
     "moment": "^2.25.1",
-    "moment-timezone": "^0.5.28",
+    "moment-timezone": "^0.5.35",
     "mongoose": "^5.9.11"
   },
   "devDependencies": {
