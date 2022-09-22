@@ -3,7 +3,7 @@ const config = require('config');
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(config.get('mongoURI'), {
+    await mongoose.connect(process.env.MONGO_URI || config.get('mongoURI'), {
       useCreateIndex: true,
       useFindAndModify: false,
       useNewUrlParser: true,
